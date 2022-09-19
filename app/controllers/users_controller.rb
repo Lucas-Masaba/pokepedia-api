@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :authenticate_request, only: [:create]
-  before_action :set_user, only: [:show, :destroy]
+  before_action :set_user, only: [:show, :destroy, :update]
 
   # Get /users
   def index
@@ -24,26 +24,26 @@ class UsersController < ApplicationController
     end
   end
 
-end
+  # Put /users/{username}
+  def update
+    return if @user.update(user_params)
 
-# Put /users/{username}
-def update
-  unless @user.update(user_params)
     render json: { errors: @user.errors.full_messages },
-    status: :unprocessable_entity
+           status: :unprocessible_entity
   end
+  
+  # Delete /users/{username}
+  def destroy
+    @user.destroy
+  end
+
+  private
+    def user_params
+      params.permit(:name, :username, :email, :password, :role)
+    end
+  
+    def set_user
+      @user = User.find(params[:id])
+    end
 end
 
-# Delete /users/{username}
-def destroy
-  @user.destroy
-end
-
-private
-  def user_params
-    params.permit(:name, :username, :email, :password, :role)
-  end
-
-  def set_user
-    @user = User.find(params[:id])
-  end
