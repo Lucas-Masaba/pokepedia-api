@@ -26,7 +26,7 @@ class UsersController < ApplicationController
 
   # Put /users/{username}
   def update
-    return if @user.update(user_params)
+    return render json: {success: 'yeah'} if @user.update(user_params)
 
     render json: { errors: @user.errors.full_messages },
            status: :unprocessible_entity
