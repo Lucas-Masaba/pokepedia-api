@@ -15,8 +15,8 @@
 # gem "pg"
 #
 default: &default
-  username: postgres
-  password: Khusiim@123
+  username: <%= ENV["POKEPEDIA_API_DATABASE_USER"] %>
+  password: <%= ENV["POKEPEDIA_API_USER_DATABASE_PASSWORD"] %>
   host: localhost
   port: 5432
 
