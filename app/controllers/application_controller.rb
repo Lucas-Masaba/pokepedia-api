@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::API
-        include DeviseTokenAuth::Concerns::SetUserByToken
   include JsonWebToken
 
   before_action :authenticate_request
